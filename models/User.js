@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { resetPassword } from "../controllers/ResetPassword";
 const userSchema = new mongoose.Schema({
 firstName:{
     type:String,
@@ -14,6 +15,7 @@ email:{
       type:String,
     required:true,
     trim:true,
+     unique:true,
 },
 password:{
       type:String,
@@ -26,17 +28,27 @@ enum:["Admin","Student","Instructor"],
 required:true,
  trim:true,
 },
+contactNumber: {
+  type: String,
+  required: true,
+},
+
 additionalDetails:{
 type:mongoose.Schema.Types.ObjectId,
   ref:"Profile",
     required:true,
-    trim:true,
+  
 },
 courses:[{
  type:mongoose.Schema.Types.ObjectId,
  ref:"Course",
 }],
-
+token:{
+    type:String,
+},
+resetPasswordExpires:{
+type:Date,
+},
 image:{
     type:String,
     required:true,
