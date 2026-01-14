@@ -1,5 +1,5 @@
 import Course from "../models/Course.js";
-import Tag from "../models/tags.js";
+import Tag from "../models/category.js";
 import User from "../models/User.js";
 import { uploadImageToCloudinary } from "../utils/imageuploader.js";
 

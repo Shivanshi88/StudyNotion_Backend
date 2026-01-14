@@ -1,8 +1,9 @@
-import Tag from "../models/tags.js" 
+import Tag from "../models/category.js" 
 //create Tag ka Handler funcation
-export const createTag = async(req, res)=>{
+export const createCategory = async(req, res)=>{
     try{
        const {name,description} = req.body;
+
        //validation
 
         if(!name || !description){
@@ -12,16 +13,16 @@ return res.status(400).json({
 })
         }
 // create entry in db
-const tagDetails = await Tag.create({
+const categoryDetails = await Tag.create({
     name:name,
     description:description,
 });
-console.log(tagDetails);
+console.log(categoryDetails);
 
 //return respons
 return res.status(200).json({
     success:true,
-    message:"Tag create succesfully",
+    message:"category create succesfully",
 })
 
     }
@@ -33,14 +34,14 @@ return res.status(200).json({
     }
 };
 
-// get all tags handler funtion
+// get all category handler funtion
 
-export const showAlltags = async (req,res)=>{
+export const showAllCategory = async (req,res)=>{
     try{
 const allTags = await Tag.find({ },{name:true,description:true});
 res.status(200).json({
     success:true,
-    message:"Alll tags return successfullly"
+    message:"Alll category return successfullly"
 }); 
     } 
     catch(error){
