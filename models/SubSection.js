@@ -8,10 +8,10 @@ const SubSection = new mongoose.Schema({
 
  },
 
- Discription:{
+ description:{
     type:String,
  },
-VideoUrl:{
+videoUrl:{
     type:String,
     required:true,
 }

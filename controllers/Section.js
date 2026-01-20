@@ -1,24 +1,25 @@
 import Section from "../models/Section.js";
 import Course from "../models/Course.js";
 
+// create a new section
 export const createSection = async (req, res) => {
   try {
-    // data fetch from request body
+    // extract section name and course id from request body
     const { sectionName, courseId } = req.body;
 
-    // validation
+    // validate input fields
     if (!sectionName || !courseId) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: "Missing required properties",
       });
     }
 
-    // create new section
-    const newSection = await Section.create({ sectonName });
+    // create new section in database
+    const newSection = await Section.create({ sectionName });
 
-    // update course with section & populate section + subsections
-    const updatedCourseDetails = await Course.findByIdAndUpdate(
+    // add section id into course content array
+    const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
       {
         $push: {
@@ -28,97 +29,75 @@ export const createSection = async (req, res) => {
       { new: true }
     )
       .populate({
-        path: "courseContent",          // sections
+        path: "courseContent",
         populate: {
-          path: "subSection",            // subsections inside section
+          path: "subSection",
         },
       })
       .exec();
 
+    // send success response with updated course
     return res.status(200).json({
       success: true,
       message: "Section created successfully",
-      data: updatedCourseDetails,
+      updatedCourse,
     });
-
   } catch (error) {
-    console.error("Error:", error.message);
+    // handle server error
     return res.status(500).json({
       success: false,
-      message: error.message || "Something went wrong",
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };
-//update section
 
+// update section name
 export const updateSection = async (req, res) => {
   try {
-    //data input
-    const { sectionName, sectionId } = req.body
-    //data validation
-    if (!sectionName || !sectionId) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required",
-      });
-    }
-    //update the data
-    const section = await Section.findByIdAndUpdate(sectionId, { sectionName }, { new: true })
+    // extract section name and section id
+    const { sectionName, sectionId } = req.body;
 
-    //return response
+    // update section in database
+    const section = await Section.findByIdAndUpdate(
+      sectionId,
+      { sectionName },
+      { new: true }
+    );
+
+    // return updated section
     return res.status(200).json({
       success: true,
-      message: "Section updated successfully",
-      data: updatedCourseDetails,
+      message: section,
     });
-
-
   } catch (error) {
-    console.error("Error:", error.message);
+    // handle error
     return res.status(500).json({
       success: false,
-      message: error.message || "failed to update the section",
+      message: "Internal server error",
     });
   }
-
 };
 
-// delete the section
+// delete a section
 export const deleteSection = async (req, res) => {
   try {
-    // get id from params
+    // get section id from request params
     const { sectionId } = req.params;
 
-    if (!sectionId) {
-      return res.status(400).json({
-        success: false,
-        message: "sectionId is required",
-      });
-    }
+    // delete section from database
+    await Section.findByIdAndDelete(sectionId);
 
-    // delete section
-    const deletedSection = await Section.findByIdAndDelete(sectionId);
-
-    if (!deletedSection) {
-      return res.status(404).json({
-        success: false,
-        message: "Section not found",
-      });
-    }
-
-    // return response
+    // send success response
     return res.status(200).json({
       success: true,
-      message: "Section deleted successfully",
-      data: deletedSection,
+      message: "Section deleted",
     });
-
   } catch (error) {
-    console.error("Error:", error.message);
+    // handle error
     return res.status(500).json({
       success: false,
-      message: error.message || "Failed to delete the section",
+      message: "Internal server error",
     });
   }
 };
-
