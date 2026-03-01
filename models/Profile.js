@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 const ProfileSchema = new mongoose.Schema({
 gender:{
     type:String,
-    required:true
+     enum: ["Male", "Female", "Other"],
 },
 dateOfBirth:{
-    type:String,
+    type:Date,
 },
 about:{
   type:String,
@@ -14,7 +14,7 @@ about:{
 },
 contactNumber:{
     type:Number,
-    trim:true,
+  
 }
 });
 export default mongoose.model("Profile", ProfileSchema);

@@ -1,6 +1,6 @@
 import SubSection from "../models/SubSection.js";
 import Section from "../models/Section.js";
-import { uploadImagetoCloudinary } from "../utils/imageUploader.js";
+import { uploadImageToCloudinary } from "../utils/imageUploader.js";
 
 // create subsection logic
 export const CreateSubSection = async (req, res) => {
@@ -20,7 +20,7 @@ export const CreateSubSection = async (req, res) => {
     }
 
     // upload video to cloudinary
-    const uploadDetails = await uploadImagetoCloudinary(
+    const uploadDetails = await uploadImageToCloudinary(
       video,
       process.env.FOLDER_NAME
     );
@@ -94,7 +94,7 @@ export const updateSubSection = async (req, res) => {
 
     // if new video uploaded, update video
     if (video) {
-      const uploadDetails = await uploadImagetoCloudinary(
+      const uploadDetails = await uploadImageToCloudinary(
         video,
         process.env.FOLDER_NAME
       );

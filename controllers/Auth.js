@@ -4,7 +4,7 @@ import OTP from "../models/OTP.js";
 import jwt from "jsonwebtoken";
 import otpGenerator from "otp-generator";
 import mailSender from "../utils/mailSender.js";
-import { passwordUpdated } from "../mail/templates/passwordUpdate.js";
+import  passwordUpdated  from "../mail/templates/passwordUpdate.js";
 import Profile from "../models/Profile.js";
 import dotenv from "dotenv";
 

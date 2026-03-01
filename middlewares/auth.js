@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User";
+import User from "../models/User.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -44,7 +44,7 @@ export const auth = async (req, res, next) => {
 
 //is student
 
-export const isStudnt = async (req, res, next) => {
+export const isStudent = async (req, res, next) => {
     try {
         if (req.user.accountType !== "Student") {
             return res.status(401).json({

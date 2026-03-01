@@ -54,13 +54,14 @@ export const showAllCategories = async (req, res) => {
 // ================= CATEGORY PAGE DETAILS =================
 export const categoryPageDetails = async (req, res) => {
   try {
+    //get category id
     const { categoryId } = req.body;
 
     // selected category courses
     const selectedCategory = await Category.findById(categoryId)
       .populate("courses")
       .exec();
-
+//validation
     if (!selectedCategory) {
       return res.status(404).json({
         success: false,

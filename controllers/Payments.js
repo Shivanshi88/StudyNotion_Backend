@@ -9,7 +9,8 @@ import User from "../models/User.js";
 
 // Utilities
 import mailSender from "../utils/mailSender.js";
-import { courseEnrollmentEmail } from "../mail/templates/courseEnrollmentEmail.js";
+import courseEnrollmentmail from "../mail/templates/courseEnrollmentmail.js";
+
 
 // Libraries
 import mongoose from "mongoose";
@@ -143,7 +144,7 @@ export const verifySignature = async (req, res) => {
     await mailSender(
       enrolledStudent.email,
       "Congratulations from CodeHelp 🎉",
-      courseEnrollmentEmail(
+      courseEnrollmentmail(
         enrolledCourse.courseName,
         enrolledStudent.firstName
       )
